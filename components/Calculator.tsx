@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { items, categories, Item } from '@/data/items';
 import Navbar from '@/components/Navbar';
@@ -18,12 +18,7 @@ export default function Calculator() {
   const router = useRouter();
 
 
-  // Auto-open cart on mobile when items are added
-  useEffect(() => {
-    if (selectedItems.length > 0 && window.innerWidth <= 768) {
-      setIsCartOpen(true);
-    }
-  }, [selectedItems.length]);
+  // Cart will only open when user clicks the cart button, not automatically
 
   const filteredItems = items.filter(item => {
     const matchesCategory = item.category === selectedCategory;
@@ -54,6 +49,10 @@ export default function Calculator() {
   };
 
   const getGSTRate = (category: string): number => {
+    // No GST for Other category items
+    if (category === 'Other') {
+      return 0;
+    }
     // 5% GST for Solar Panels and Inverters
     if (category === 'Solar Panels' || category === 'Inverters') {
       return 5;
@@ -75,12 +74,15 @@ export default function Calculator() {
   const calculateGSTBreakdown = () => {
     let subtotal5Percent = 0;
     let subtotal18Percent = 0;
+    let subtotalNoGST = 0;
 
     selectedItems.forEach(selectedItem => {
       const itemTotal = calculateItemTotal(selectedItem);
       const gstRate = getGSTRate(selectedItem.item.category);
       
-      if (gstRate === 5) {
+      if (gstRate === 0) {
+        subtotalNoGST += itemTotal;
+      } else if (gstRate === 5) {
         subtotal5Percent += itemTotal;
       } else {
         subtotal18Percent += itemTotal;
@@ -93,6 +95,7 @@ export default function Calculator() {
     return {
       subtotal5Percent,
       subtotal18Percent,
+      subtotalNoGST,
       gst5Percent,
       gst18Percent,
       totalGST: gst5Percent + gst18Percent
@@ -141,29 +144,30 @@ export default function Calculator() {
 
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
-    const margin = 15;
-    let yPosition = margin;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 8; // Minimal margin for maximum space
+    let yPosition = margin; // Start at minimal position
 
-    // Company Header
-    doc.setFontSize(18);
+    // Company Header - ultra compact
+    doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
     doc.text('CHAIRBORD PRIVATE LIMITED', pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 8;
+    yPosition += 3;
 
-    doc.setFontSize(10);
+    doc.setFontSize(6.5);
     doc.setFont('helvetica', 'normal');
     doc.text('PLOT NO-10, SHRI SHYAM VIHAR', pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 5;
+    yPosition += 2.5;
     doc.text('KALWAR ROAD JAIPUR RAJASTHAN, 302012', pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 5;
+    yPosition += 2.5;
     doc.text('Contact: +91-9251666646 | E-Mail: support@chairbord.com', pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 10;
+    yPosition += 3;
 
     // Title
-    doc.setFontSize(16);
+    doc.setFontSize(8);
     doc.setFont('helvetica', 'bold');
     doc.text('SOLAR SYSTEM QUOTATION', pageWidth / 2, yPosition, { align: 'center' });
-    yPosition += 8;
+    yPosition += 3;
 
     // Date
     const currentDate = new Date().toLocaleDateString('en-IN', {
@@ -171,157 +175,170 @@ export default function Calculator() {
       month: 'long',
       year: 'numeric'
     });
-    doc.setFontSize(10);
+    doc.setFontSize(6.5);
     doc.setFont('helvetica', 'normal');
     doc.text(`Date: ${currentDate}`, margin, yPosition);
-    yPosition += 10;
+    yPosition += 3;
 
-    // Items Table
+    // Items Table (without GST column)
     const tableData = selectedItems.map((selectedItem, index) => {
       const itemTotal = calculateItemTotal(selectedItem);
-      const gstRate = getGSTRate(selectedItem.item.category);
-      // Ensure all values are strings, especially Rate and Amount to match GST styling
+      // Ensure all values are strings
       return [
         String(index + 1),
         String(selectedItem.item.name),
         String(selectedItem.quantity),
         String(selectedItem.item.unit),
         String(formatCurrencyForPDF(selectedItem.item.rate)), // Rate as string
-        String(`${gstRate}%`), // GST as string
         String(formatCurrencyForPDF(itemTotal)) // Amount as string
       ];
     });
 
     autoTable(doc, {
       startY: yPosition,
-      head: [['S.No.', 'Item Description', 'Qty', 'Unit', 'Rate', 'GST %', 'Amount']],
+      head: [['S.No.', 'Item Description', 'Qty', 'Unit', 'Rate', 'Amount']],
       body: tableData,
       theme: 'grid',
       headStyles: {
         fillColor: [102, 126, 234],
         textColor: 255,
         fontStyle: 'bold',
-        fontSize: 10,
-        font: 'helvetica'
+        fontSize: 7,
+        font: 'helvetica',
+        cellPadding: { top: 2, bottom: 2, left: 1.5, right: 1.5 },
+        minCellHeight: 6
       },
       bodyStyles: {
-        fontSize: 9,
+        fontSize: 6.5,
         font: 'helvetica',
         fontStyle: 'normal',
-        textColor: [0, 0, 0]
+        textColor: [0, 0, 0],
+        cellPadding: { top: 1.5, bottom: 1.5, left: 1.5, right: 1.5 },
+        minCellHeight: 5
       },
+      // Enable multi-page support but try to fit on one page
+      pageBreak: 'auto',
+      rowPageBreak: 'avoid',
+      showHead: 'everyPage',
+      margin: { left: margin, right: margin, top: yPosition, bottom: 8 },
       columnStyles: {
         // S.No.
         0: { 
-          cellWidth: 20, 
+          cellWidth: 12, 
           halign: 'left', 
           font: 'helvetica', 
           fontStyle: 'normal', 
-          fontSize: 9,
+          fontSize: 6.5,
           textColor: [0, 0, 0],
-          valign: 'middle'
+          valign: 'middle',
+          cellPadding: { top: 1.5, bottom: 1.5, left: 1.5, right: 1.5 }
         },
         // Item Description - same font as all other data columns
         1: { 
-          cellWidth: 60, 
+          cellWidth: 110, 
           halign: 'left', 
           font: 'helvetica', 
           fontStyle: 'normal', 
-          fontSize: 9,
+          fontSize: 6.5,
           textColor: [0, 0, 0],
-          valign: 'middle'
+          valign: 'middle',
+          cellPadding: { top: 1.5, bottom: 1.5, left: 1.5, right: 1.5 }
         },
         // Qty
         2: { 
-          cellWidth: 15, 
+          cellWidth: 12, 
           halign: 'left', 
           font: 'helvetica', 
           fontStyle: 'normal', 
-          fontSize: 9,
+          fontSize: 6.5,
           textColor: [0, 0, 0],
-          valign: 'middle'
+          valign: 'middle',
+          cellPadding: { top: 1.5, bottom: 1.5, left: 1.5, right: 1.5 }
         },
         // Unit
         3: { 
-          cellWidth: 15, 
+          cellWidth: 12, 
           halign: 'left', 
           font: 'helvetica', 
           fontStyle: 'normal', 
-          fontSize: 9,
+          fontSize: 6.5,
           textColor: [0, 0, 0],
-          valign: 'middle'
+          valign: 'middle',
+          cellPadding: { top: 1.5, bottom: 1.5, left: 1.5, right: 1.5 }
         },
         // Rate - identical styling to all other columns
         4: { 
-          cellWidth: 25, 
+          cellWidth: 24, 
           halign: 'left', 
           font: 'helvetica', 
           fontStyle: 'normal', 
-          fontSize: 9, 
+          fontSize: 6.5, 
           textColor: [0, 0, 0],
-          valign: 'middle'
-        },
-        // GST % - identical styling to all other columns
-        5: { 
-          cellWidth: 20, 
-          halign: 'left', 
-          font: 'helvetica', 
-          fontStyle: 'normal', 
-          fontSize: 9, 
-          textColor: [0, 0, 0],
-          valign: 'middle'
+          valign: 'middle',
+          cellPadding: { top: 1.5, bottom: 1.5, left: 1.5, right: 1.5 }
         },
         // Amount - identical styling to all other columns
-        6: { 
-          cellWidth: 25, 
+        5: { 
+          cellWidth: 24, 
           halign: 'left', 
           font: 'helvetica', 
           fontStyle: 'normal', 
-          fontSize: 9, 
+          fontSize: 6.5, 
           textColor: [0, 0, 0],
-          valign: 'middle'
+          valign: 'middle',
+          cellPadding: { top: 1.5, bottom: 1.5, left: 1.5, right: 1.5 }
         }
       },
       styles: {
         font: 'helvetica',
         fontStyle: 'normal',
-        fontSize: 9,
-        textColor: [0, 0, 0]
-      },
-      margin: { left: margin, right: margin }
+        fontSize: 6.5,
+        textColor: [0, 0, 0],
+        cellPadding: { top: 1.5, bottom: 1.5, left: 1.5, right: 1.5 }
+      }
     });
 
-    yPosition = (doc as any).lastAutoTable.finalY + 10;
+    // Get the final Y position after table (handles multi-page)
+    yPosition = (doc as any).lastAutoTable.finalY + 3;
+    
+    // If we're on a new page, add some top margin
+    if (yPosition < 12) {
+      yPosition = 12;
+    }
 
     // Price Breakdown
     const subtotal = calculateSubtotal();
     const gstBreakdown = calculateGSTBreakdown();
     const grandTotal = calculateGrandTotal();
 
-    // Breakdown Section
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text('PRICE BREAKDOWN', margin, yPosition);
-    yPosition += 8;
+    // Check if we need a new page for the breakdown section - be very conservative
+    const breakdownHeight = 40; // Reduced height for breakdown
+    const footerHeight = 8;
+    
+    // Only add new page if absolutely necessary (with minimal buffer)
+    if (yPosition + breakdownHeight + footerHeight > pageHeight - 3) {
+      doc.addPage();
+      yPosition = 12;
+    }
 
-    // Use consistent font size and style for all breakdown items
-    doc.setFontSize(9);
+    // Use consistent font size and style for all breakdown items - ultra compact
+    doc.setFontSize(7);
     doc.setFont('helvetica', 'normal');
     
     // Subtotal
-    doc.text('Subtotal:', pageWidth - margin - 60, yPosition);
+    doc.text('Subtotal:', pageWidth - margin - 50, yPosition);
     doc.setFont('helvetica', 'normal');
     doc.text(formatCurrencyForPDF(subtotal), pageWidth - margin, yPosition, { align: 'right' });
-    yPosition += 6;
+    yPosition += 4;
 
     // GST 5%
     if (gstBreakdown.subtotal5Percent > 0) {
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(5, 150, 105);
-      doc.text('GST (5%):', pageWidth - margin - 60, yPosition);
+      doc.text('GST (5%):', pageWidth - margin - 50, yPosition);
       doc.setFont('helvetica', 'normal');
       doc.text(formatCurrencyForPDF(gstBreakdown.gst5Percent), pageWidth - margin, yPosition, { align: 'right' });
-      yPosition += 6;
+      yPosition += 4;
       doc.setTextColor(0, 0, 0);
     }
 
@@ -329,39 +346,42 @@ export default function Calculator() {
     if (gstBreakdown.subtotal18Percent > 0) {
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(5, 150, 105);
-      doc.text('GST (18%):', pageWidth - margin - 60, yPosition);
+      doc.text('GST (18%):', pageWidth - margin - 50, yPosition);
       doc.setFont('helvetica', 'normal');
       doc.text(formatCurrencyForPDF(gstBreakdown.gst18Percent), pageWidth - margin, yPosition, { align: 'right' });
-      yPosition += 6;
+      yPosition += 4;
       doc.setTextColor(0, 0, 0);
     }
 
     // Total GST
     if (gstBreakdown.totalGST > 0) {
       doc.setFont('helvetica', 'normal');
-      doc.text('Total GST:', pageWidth - margin - 60, yPosition);
+      doc.text('Total GST:', pageWidth - margin - 50, yPosition);
       doc.setFont('helvetica', 'normal');
       doc.text(formatCurrencyForPDF(gstBreakdown.totalGST), pageWidth - margin, yPosition, { align: 'right' });
-      yPosition += 8;
+      yPosition += 5;
     }
 
     // Grand Total - completely transparent (no box, no border)
     const boxY = yPosition;
     
-    doc.setFontSize(10);
+    doc.setFontSize(8);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 0, 0); // Black text
-    doc.text('Grand Total:', pageWidth - margin - 60, boxY);
-    doc.setFontSize(10);
+    doc.text('Grand Total:', pageWidth - margin - 50, boxY);
+    doc.setFontSize(8);
     doc.setFont('helvetica', 'bold');
     doc.text(formatCurrencyForPDF(grandTotal), pageWidth - margin, boxY, { align: 'right' });
 
-    // Footer
-    const pageHeight = doc.internal.pageSize.getHeight();
-    doc.setTextColor(150, 150, 150);
-    doc.setFontSize(8);
-    doc.setFont('helvetica', 'italic');
-    doc.text('This is a computer-generated quotation.', pageWidth / 2, pageHeight - 10, { align: 'center' });
+    // Footer on each page - compact
+    const totalPages = doc.internal.pages.length - 1;
+    for (let i = 1; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setTextColor(150, 150, 150);
+      doc.setFontSize(6);
+      doc.setFont('helvetica', 'italic');
+      doc.text('This is a computer-generated quotation.', pageWidth / 2, pageHeight - 6, { align: 'center' });
+    }
 
     // Generate filename
     const filename = `Solar_Quotation_${new Date().toISOString().split('T')[0]}.pdf`;

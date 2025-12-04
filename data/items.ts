@@ -597,7 +597,7 @@ export const items: Item[] = [
     id: 'installation',
     name: 'Installation',
     rate: 2.00,
-    unit: 'kW',
+    unit: 'W',
     category: 'Other'
   },
   {
