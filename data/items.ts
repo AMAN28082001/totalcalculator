@@ -1,0 +1,630 @@
+export interface Item {
+  id: string;
+  name: string;
+  rate: number;
+  unit: string;
+  category: string;
+}
+
+export const items: Item[] = [
+  // Solar Panels
+  {
+    id: 'adani-545-dcr',
+    name: 'ADANI SOLAR PANEL 545 WATT(DCR)',
+    rate: 13706.75,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'adani-550-dcr',
+    name: 'ADANI SOLAR PANEL 550 WATT(DCR)',
+    rate: 13746.98,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'adani-550-ndcr',
+    name: 'ADANI SOLAR PANEL 550 WATT(NDCR)',
+    rate: 0,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'adani-555-dcr',
+    name: 'ADANI SOLAR PANEL 555 WATT(DCR)',
+    rate: 13819.50,
+    unit: 'PCS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'adani-555-ndcr',
+    name: 'ADANI SOLAR PANEL 555 WATT(NDCR)',
+    rate: 7853.25,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'adani-570-dcr',
+    name: 'ADANI SOLAR PANEL 570 WATT(DCR)',
+    rate: 15105.00,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'adani-610-dcr',
+    name: 'ADANI SOLAR PANEL 610 WATT(DCR)',
+    rate: 0,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'adani-620-dcr',
+    name: 'ADANI SOLAR PANEL 620 WATT(DCR)',
+    rate: 16616.00,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'adani-620-ndcr',
+    name: 'ADANI SOLAR PANEL 620 WATT(NDCR)',
+    rate: 9548.00,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'waaree-540-dcr',
+    name: 'WAAREE SOLAR PANEL BI-55-540(DCR)',
+    rate: 13095.00,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'waaree-575-dcr',
+    name: 'WAAREE SOLAR PANEL BI-575(DCR)',
+    rate: 13800.00,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'waaree-590-ndcr',
+    name: 'WAAREE SOLAR PANEL BI-590(NDCR)',
+    rate: 8850.00,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'waaree-690-ndcr',
+    name: 'WAAREE SOLAR PANEL BI-690(NDCR)',
+    rate: 11178.00,
+    unit: 'PCS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'solar-panels-generic',
+    name: 'SOLAR PANELS',
+    rate: 13248.18,
+    unit: 'NOS',
+    category: 'Solar Panels'
+  },
+
+  // Inverters
+  {
+    id: 'inverter-3.3kw-1ph-xwatt',
+    name: '3.3KWP-GTI-1PH-XWATT',
+    rate: 0,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-3.4kw-1ph-vsole',
+    name: '3.4KWP-GTI-1PH-VSOLE',
+    rate: 14300.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-3.6kw-1ph-xwatt',
+    name: '3.6KWP-GTI-1PH-XWATT',
+    rate: 14580.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-3kw-1ph-xwatt',
+    name: '3 KWP-GTI-1PH-XWATT',
+    rate: 14490.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-5.4kw-1ph-1mppt-vsole',
+    name: '5.4KWP-GTI-1PH 1MPPT VSOLE',
+    rate: 23000.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-5.4kw-1ph-1mppt-xwatt',
+    name: '5.4KWP-GTI-1PH 1MPPT XWATT',
+    rate: 0,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-5.4kw-1ph-2mppt-xwatt',
+    name: '5.4KWP-GTI-1PH 2MPPT XWATT',
+    rate: 25380.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-5kw-1ph-1mppt-vsole',
+    name: '5KWP - GTI - 1PH - 1MPPT-VSOLE',
+    rate: 22800.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-5kw-1ph-1mppt-xwatt',
+    name: '5KWP - GTI - 1PH - 1MPPT-XWATT',
+    rate: 27420.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-5kw-3ph-1mppt-xwatt',
+    name: '5KWP - GTI - 3PH - 1MPPT-XWATT',
+    rate: 41220.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-6kw-3ph-2mppt-xwatt',
+    name: '6KWP-GTI-3PH 2MPPT-XWATT',
+    rate: 42120.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-8kw-3ph-2mppt-xwatt',
+    name: '8KWP-GTI-3PH-2MPPT-XWATT',
+    rate: 42480.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-8kw-3ph-luminous',
+    name: '8KWP-GTI-3PH-LUNINOUS',
+    rate: 0,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'inverter-10kw-3ph-2mppt-xwatt',
+    name: '10KWP-GTI-3PH-2MPPT-XWATT',
+    rate: 42930.00,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+  {
+    id: 'solar-inverter-generic',
+    name: 'SOLAR ON GRID TIE INVERTER',
+    rate: 28531.60,
+    unit: 'NOS',
+    category: 'Inverters'
+  },
+
+  // Cables - DC Cables
+  {
+    id: 'dc-cable-1cx4-50mm-polycab',
+    name: 'DC CABLE 1CX4 SQMM 50MM POLYCAB',
+    rate: 39.98,
+    unit: 'MTR',
+    category: 'Cables - DC'
+  },
+  {
+    id: 'dc-cable-1cx4-black-50mm-polycab',
+    name: 'DC CABLE 1CX4 SQ. MM BLACK 50MM POLYCAB',
+    rate: 0,
+    unit: 'MTR',
+    category: 'Cables - DC'
+  },
+
+  // Cables - Copper Flexible
+  {
+    id: 'cable-1c-2.5sqmm-kei',
+    name: '1C*2.5 SQMM COPPER FLEXIBLE KEI',
+    rate: 25.08,
+    unit: 'MTR',
+    category: 'Cables - Copper'
+  },
+  {
+    id: 'cable-1c-2.5sqmm-polycab',
+    name: '1C*2.5 SQMM COPPER FLEXIBLE POLYCAB',
+    rate: 26.50,
+    unit: 'MTR',
+    category: 'Cables - Copper'
+  },
+  {
+    id: 'cable-1c-4sqmm-kei',
+    name: '1C*4 SQMM COPPER FLEXIBLE KEI',
+    rate: 37.28,
+    unit: 'MTR',
+    category: 'Cables - Copper'
+  },
+  {
+    id: 'cable-1c-4sqmm-polycab',
+    name: '1C*4 SQMM COPPER FLEXIBLE POLYCAB',
+    rate: 40.50,
+    unit: 'MTR',
+    category: 'Cables - Copper'
+  },
+  {
+    id: 'cable-1c-6sqmm-kei',
+    name: '1C*6 SQMM COPPER FLEXIBLE KEI',
+    rate: 56.92,
+    unit: 'MTR',
+    category: 'Cables - Copper'
+  },
+  {
+    id: 'cable-2c-6sqmm-polycab',
+    name: '2C*6 SQMM AI ARMAD CABLE POLYCAB',
+    rate: 61.07,
+    unit: 'MTR',
+    category: 'Cables - Copper'
+  },
+  {
+    id: 'cable-4c-10sqmm-kei',
+    name: '4C*10 SQMM AI ARMD CABLE KEI',
+    rate: 84.00,
+    unit: 'MTR',
+    category: 'Cables - Copper'
+  },
+  {
+    id: 'cable-4c-6sqmm-kei',
+    name: '4C*6 SQMM AI ARMD CABLE KEI',
+    rate: 70.30,
+    unit: 'MTR',
+    category: 'Cables - Copper'
+  },
+
+  // Meters
+  {
+    id: 'meter-lt-1ph-net',
+    name: 'L&T 1 PHASE NET METER',
+    rate: 2292.31,
+    unit: 'NOS',
+    category: 'Meters'
+  },
+  {
+    id: 'meter-lt-1ph-solar',
+    name: 'L&T 1 PHASE SOLAR METER',
+    rate: 2055.56,
+    unit: 'NOS',
+    category: 'Meters'
+  },
+  {
+    id: 'meter-lt-3ph-net',
+    name: 'L&T 3 PHASE NET METER',
+    rate: 3700.00,
+    unit: 'NOS',
+    category: 'Meters'
+  },
+  {
+    id: 'meter-lt-3ph-solar',
+    name: 'L&T 3 PHASE SOLAR METER',
+    rate: 3500.00,
+    unit: 'NOS',
+    category: 'Meters'
+  },
+  {
+    id: 'meter-net-generic',
+    name: 'NET METER',
+    rate: 3065.79,
+    unit: 'NOS',
+    category: 'Meters'
+  },
+  {
+    id: 'meter-solar-generic',
+    name: 'SOLAR METER',
+    rate: 2338.75,
+    unit: 'NOS',
+    category: 'Meters'
+  },
+  {
+    id: 'meter-secure-3ph-solar-net',
+    name: 'SECURE 3 PHASE SOLAR + NET',
+    rate: 0,
+    unit: 'NOS',
+    category: 'Meters'
+  },
+
+  // Electrical Components - ACDB
+  {
+    id: 'acdb-32amp-2pole-havells',
+    name: 'ACDB 32AMP 2POLE HAVELLS MCB "ELMAK SPD',
+    rate: 1080.00,
+    unit: 'NOS',
+    category: 'Electrical Components'
+  },
+  {
+    id: 'acdb-32amp-4pole-havells',
+    name: 'ACDB 32 AMP 4 POLE HAVELLS MCB & ELMAC',
+    rate: 2200.00,
+    unit: 'NOS',
+    category: 'Electrical Components'
+  },
+  {
+    id: 'acdb-3p-5-10kw-havells',
+    name: 'ACDB 3P (5-10 KW, HAVEELLS & BLITZ)',
+    rate: 1850.00,
+    unit: 'NOS',
+    category: 'Electrical Components'
+  },
+  {
+    id: 'acdb-63amp-4pole-havells',
+    name: 'ACDB 63amp 4pole Havells MCB & Thelex SPD',
+    rate: 0,
+    unit: 'NOS',
+    category: 'Electrical Components'
+  },
+  {
+    id: 'acdb-dcdb-1ph-combo',
+    name: 'ACDB & DCDB 1PH COMBO (HAVELLS & BLITZ, 32A, 1000V)',
+    rate: 1700.00,
+    unit: 'NOS',
+    category: 'Electrical Components'
+  },
+
+  // Electrical Components - DCDB
+  {
+    id: 'dcdb-1in-1out-1000v',
+    name: 'DCDB 1 IN 1OUT 1000VOLT SPD 25AMP FUSE',
+    rate: 1375.00,
+    unit: 'NOS',
+    category: 'Electrical Components'
+  },
+  {
+    id: 'dcdb-1in-1out-600v',
+    name: 'DCDB 1 IN 1OUT 600VOLT SPD 25AMP FUSE',
+    rate: 1050.00,
+    unit: 'NOS',
+    category: 'Electrical Components'
+  },
+  {
+    id: 'dcdb-2in-2out-1000v',
+    name: 'DCDB 2IN 2 OUT 1000V DC SPD & 25AMP FUSE ELMAK',
+    rate: 0,
+    unit: 'NOS',
+    category: 'Electrical Components'
+  },
+
+  // Structural Components
+  {
+    id: 'gp-tube-40x40x2',
+    name: 'G.P. TUBES 40*40*2.0MM(14)',
+    rate: 968.16,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: 'gp-tube-60x40x2',
+    name: 'G.P. TUBES 60*40*2.0MM(18)',
+    rate: 1250.87,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: 'gp-tube-60x60x2',
+    name: 'G.P. TUBES 60*60*2.0MM(22)',
+    rate: 1495.00,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: 'gp-tube-72x72x2',
+    name: 'G.P. TUBES 72*72*2.0 MM(28)',
+    rate: 1860.49,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: 'hr-plate-base-plate',
+    name: 'H R PLATE / BASE PLATE',
+    rate: 60.00,
+    unit: 'KG',
+    category: 'Structural Components'
+  },
+  {
+    id: 'gi-bnw-1-2x6',
+    name: 'GI BNW 1/2*6',
+    rate: 114.71,
+    unit: 'KG',
+    category: 'Structural Components'
+  },
+  {
+    id: 'gi-l-bolt',
+    name: 'GI L BOLT 5/16*1 1/2*2 1/4',
+    rate: 115.00,
+    unit: 'KG',
+    category: 'Structural Components'
+  },
+  {
+    id: 'btb-12x125',
+    name: 'BTB 12*125 (FASTENER)',
+    rate: 16.00,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: 'lokfix-s-0.5ltr',
+    name: 'LOKFIX S: 0.5 LTR (Fastener Chemical)',
+    rate: 444.97,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: 'earthing-backfill',
+    name: 'EARTHING BACK FILL COMPOUND 25KG',
+    rate: 150.00,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: '14mm-la-thread',
+    name: '14MM X 1MTR LA THREAD',
+    rate: 300.00,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: '16mm-1mtr-cbr',
+    name: '16MM X 1MTR CBR',
+    rate: 180.00,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: '16mm-2mtr-cbr',
+    name: '16MM X 2MTR CBR',
+    rate: 310.00,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: '17mm-1mtr-cbr',
+    name: '17MM 1MTR CBR',
+    rate: 190.00,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: '17mm-2mtr-cbr',
+    name: '17 MM 2MTR CBR',
+    rate: 340.00,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+  {
+    id: 'inline-pipe-16mm',
+    name: 'INLINE PIPE 16MM',
+    rate: 0,
+    unit: 'PCS',
+    category: 'Structural Components'
+  },
+
+  // Accessories
+  {
+    id: 'solar-connector-mc4',
+    name: 'SOLAR CONNECTROR MC4 (LQ-1)',
+    rate: 19.88,
+    unit: 'NOS',
+    category: 'Accessories'
+  },
+  {
+    id: 'cable-tie',
+    name: 'CABLE TIE',
+    rate: 134.29,
+    unit: 'NOS',
+    category: 'Accessories'
+  },
+  {
+    id: 'pvc-cable-channel-45x25',
+    name: 'PVC CABLE CHANNEL 45x25',
+    rate: 65.00,
+    unit: 'PCS',
+    category: 'Accessories'
+  },
+  {
+    id: 'pvc-cable-channel-45x45',
+    name: 'PVC CABLE CHANNEL 45x45',
+    rate: 70.79,
+    unit: 'PCS',
+    category: 'Accessories'
+  },
+  {
+    id: 'pvc-insulation-tape',
+    name: 'PVC INSULATION TAPE',
+    rate: 20.00,
+    unit: 'NOS',
+    category: 'Accessories'
+  },
+  {
+    id: 'pvc-saddle-16mm',
+    name: 'PVC SADDLE 16 MM',
+    rate: 80.00,
+    unit: 'PAC',
+    category: 'Accessories'
+  },
+  {
+    id: 'pvc-saddle-20mm',
+    name: 'PVC SADDLE 20MM',
+    rate: 90.00,
+    unit: 'PAC',
+    category: 'Accessories'
+  },
+  {
+    id: 'pvc-saddle-25mm',
+    name: 'PVC SADDLE 25 MM',
+    rate: 110.00,
+    unit: 'PAC',
+    category: 'Accessories'
+  },
+
+  // Other Category
+  {
+    id: 'welding-rod',
+    name: 'Welding Rod',
+    rate: 300.00,
+    unit: 'PCS',
+    category: 'Other'
+  },
+  {
+    id: 'pillar',
+    name: 'Pillar',
+    rate: 200.00,
+    unit: 'Pillar',
+    category: 'Other'
+  },
+  {
+    id: 'chemical-spray',
+    name: 'Chemical Spray',
+    rate: 140.00,
+    unit: 'PCS',
+    category: 'Other'
+  },
+  {
+    id: 'installation',
+    name: 'Installation',
+    rate: 2.00,
+    unit: 'kW',
+    category: 'Other'
+  },
+  {
+    id: 'descom-charge',
+    name: 'Descom Charge',
+    rate: 1000.00,
+    unit: 'Fixed',
+    category: 'Other'
+  },
+  {
+    id: 'transportation-charges',
+    name: 'Transportation Charges',
+    rate: 1500.00,
+    unit: 'Fixed',
+    category: 'Other'
+  }
+];
+
+export const categories = [
+  'Solar Panels',
+  'Inverters',
+  'Cables - DC',
+  'Cables - Copper',
+  'Meters',
+  'Electrical Components',
+  'Structural Components',
+  'Accessories',
+  'Other'
+];
+
