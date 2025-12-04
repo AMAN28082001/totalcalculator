@@ -2,17 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { isAuthenticated } from '@/lib/auth';
+import { isAuthenticated, getUserRole } from '@/lib/auth';
+import RoleSelector from './RoleSelector';
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const checkAuth = () => {
       const auth = isAuthenticated();
+      const role = getUserRole();
       setIsAuth(auth);
+      setUserRole(role);
       setLoading(false);
       
       if (!auth) {
@@ -33,6 +37,11 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (!isAuth) {
     return null;
+  }
+
+  // If agent is logged in but hasn't selected a role yet
+  if (userRole === 'agent') {
+    return <RoleSelector />;
   }
 
   return <>{children}</>;

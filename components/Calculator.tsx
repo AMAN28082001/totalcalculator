@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { items, categories, Item } from '@/data/items';
 import Navbar from '@/components/Navbar';
+import { getUserRole } from '@/lib/auth';
 
 interface SelectedItem {
   item: Item;
@@ -15,7 +16,27 @@ export default function Calculator() {
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [markupPercentage, setMarkupPercentage] = useState<number>(0);
+  const [customerName, setCustomerName] = useState<string>('');
+  const [customerContact, setCustomerContact] = useState<string>('');
   const router = useRouter();
+
+  useEffect(() => {
+    // Check role on mount and after a short delay to catch localStorage updates
+    const checkRole = () => {
+      const role = getUserRole();
+      setUserRole(role);
+    };
+    
+    // Check immediately
+    checkRole();
+    
+    // Check again after a short delay (in case role was just set)
+    const timeout = setTimeout(checkRole, 100);
+    
+    return () => clearTimeout(timeout);
+  }, []);
 
 
   // Cart will only open when user clicks the cart button, not automatically
@@ -61,8 +82,20 @@ export default function Calculator() {
     return 18;
   };
 
+  // Get price with markup applied (for sales mode)
+  const getItemPrice = (item: Item): number => {
+    const basePrice = item.rate;
+    // Only apply markup in sales mode
+    if (userRole === 'sales' && markupPercentage > 0) {
+      return basePrice * (1 + markupPercentage / 100);
+    }
+    // For customer, admin, or any other role, return base price
+    return basePrice;
+  };
+
   const calculateItemTotal = (selectedItem: SelectedItem) => {
-    return selectedItem.item.rate * selectedItem.quantity;
+    const price = getItemPrice(selectedItem.item);
+    return price * selectedItem.quantity;
   };
 
   const calculateSubtotal = () => {
@@ -180,16 +213,36 @@ export default function Calculator() {
     doc.text(`Date: ${currentDate}`, margin, yPosition);
     yPosition += 3;
 
+    // Customer Details (if in sales mode)
+    if (userRole === 'sales' && (customerName || customerContact)) {
+      yPosition += 2;
+      doc.setFontSize(7);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Customer Details:', margin, yPosition);
+      yPosition += 3;
+      doc.setFont('helvetica', 'normal');
+      if (customerName) {
+        doc.text(`Name: ${customerName}`, margin, yPosition);
+        yPosition += 3;
+      }
+      if (customerContact) {
+        doc.text(`Contact: ${customerContact}`, margin, yPosition);
+        yPosition += 3;
+      }
+      yPosition += 2;
+    }
+
     // Items Table (without GST column)
     const tableData = selectedItems.map((selectedItem, index) => {
       const itemTotal = calculateItemTotal(selectedItem);
+      const itemPrice = getItemPrice(selectedItem.item);
       // Ensure all values are strings
       return [
         String(index + 1),
         String(selectedItem.item.name),
         String(selectedItem.quantity),
         String(selectedItem.item.unit),
-        String(formatCurrencyForPDF(selectedItem.item.rate)), // Rate as string
+        String(formatCurrencyForPDF(itemPrice)), // Rate as string (with markup if customer mode)
         String(formatCurrencyForPDF(itemTotal)) // Amount as string
       ];
     });
@@ -440,7 +493,14 @@ export default function Calculator() {
                     <div className="item-info">
                       <h3 className="item-name">{item.name}</h3>
                       <div className="item-details">
-                        <span className="item-rate">Rate: {formatCurrency(item.rate)}</span>
+                        {/* Show price for admin, customer, or when role is not set */}
+                        {userRole !== 'sales' && (
+                          <span className="item-rate">Rate: {formatCurrency(getItemPrice(item))}</span>
+                        )}
+                        {/* Hide price only for sales role */}
+                        {userRole === 'sales' && (
+                          <span className="item-rate" style={{ color: '#9ca3af' }}>Price hidden</span>
+                        )}
                         <span className="item-unit">Unit: {item.unit}</span>
                       </div>
                     </div>
@@ -507,7 +567,7 @@ export default function Calculator() {
                       <h4 className="selected-item-name">{selectedItem.item.name}</h4>
                       <div className="selected-item-details">
                         <span>
-                          {selectedItem.quantity} {selectedItem.item.unit} × {formatCurrency(selectedItem.item.rate)}
+                          {selectedItem.quantity} {selectedItem.item.unit} × {formatCurrency(getItemPrice(selectedItem.item))}
                         </span>
                       </div>
                     </div>
@@ -567,9 +627,61 @@ export default function Calculator() {
               </div>
             </div>
           )}
+
+          {/* Sales Mode Controls */}
+          {userRole === 'sales' && (
+            <div className="customer-controls">
+              <h3 className="customer-controls-title">Customer Information</h3>
+              <div className="customer-inputs">
+                <div className="input-group">
+                  <label htmlFor="customerName">Customer Name</label>
+                  <input
+                    id="customerName"
+                    type="text"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    placeholder="Enter customer name"
+                    className="customer-input"
+                    autoComplete="name"
+                  />
+                </div>
+                <div className="input-group">
+                  <label htmlFor="customerContact">Contact Number</label>
+                  <input
+                    id="customerContact"
+                    type="tel"
+                    value={customerContact}
+                    onChange={(e) => setCustomerContact(e.target.value)}
+                    placeholder="Enter contact number (e.g., +91-9876543210)"
+                    className="customer-input"
+                    autoComplete="tel"
+                    pattern="[0-9+\-\s()]*"
+                  />
+                </div>
+              </div>
+              <div className="markup-control">
+                <label htmlFor="markupPercentage">Markup Percentage (%)</label>
+                <input
+                  id="markupPercentage"
+                  type="number"
+                  value={markupPercentage}
+                  onChange={(e) => setMarkupPercentage(parseFloat(e.target.value) || 0)}
+                  placeholder="0"
+                  min="0"
+                  max="100"
+                  step="0.1"
+                  className="markup-input"
+                />
+                {markupPercentage > 0 && (
+                  <div className="markup-info">
+                    All prices will be increased by {markupPercentage}%
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
-
       </div>
     </div>
   );

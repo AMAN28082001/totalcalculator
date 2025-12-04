@@ -26,8 +26,15 @@ export default function Login() {
     // Simulate a small delay for better UX
     await new Promise(resolve => setTimeout(resolve, 300));
 
-    if (login(username, password)) {
-      router.push('/');
+    const role = login(username, password);
+    if (role) {
+      if (role === 'agent') {
+        // Agent will be redirected to role selector by AuthGuard
+        router.push('/');
+      } else {
+        // Admin goes directly to calculator
+        router.push('/');
+      }
       router.refresh();
     } else {
       setError('Invalid username or password');
