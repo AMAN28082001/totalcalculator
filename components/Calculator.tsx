@@ -570,17 +570,6 @@ export default function Calculator() {
         </div>
       </div>
 
-      {/* Floating Cart Button for Mobile */}
-      {selectedItems.length > 0 && !isCartOpen && (
-        <button 
-          className="floating-cart-button"
-          onClick={() => setIsCartOpen(true)}
-        >
-          🛒
-          <span className="floating-cart-badge">{selectedItems.length}</span>
-          <span className="floating-cart-text">View Cart</span>
-        </button>
-      )}
       </div>
     </div>
   );
