@@ -25,7 +25,7 @@ export const items: Item[] = [
   {
     id: 'adani-550-ndcr',
     name: 'ADANI SOLAR PANEL 550 WATT(NDCR)',
-    rate: 0,
+    rate: 13819.50,
     unit: 'NOS',
     category: 'Solar Panels'
   },
@@ -53,7 +53,7 @@ export const items: Item[] = [
   {
     id: 'adani-610-dcr',
     name: 'ADANI SOLAR PANEL 610 WATT(DCR)',
-    rate: 0,
+    rate: 16600.00,
     unit: 'NOS',
     category: 'Solar Panels'
   },
@@ -111,7 +111,7 @@ export const items: Item[] = [
   {
     id: 'inverter-3.3kw-1ph-xwatt',
     name: '3.3KWP-GTI-1PH-XWATT',
-    rate: 0,
+    rate: 14580.00,
     unit: 'NOS',
     category: 'Inverters'
   },
@@ -146,7 +146,7 @@ export const items: Item[] = [
   {
     id: 'inverter-5.4kw-1ph-1mppt-xwatt',
     name: '5.4KWP-GTI-1PH 1MPPT XWATT',
-    rate: 0,
+    rate: 25000.00,
     unit: 'NOS',
     category: 'Inverters'
   },
@@ -193,13 +193,6 @@ export const items: Item[] = [
     category: 'Inverters'
   },
   {
-    id: 'inverter-8kw-3ph-luminous',
-    name: '8KWP-GTI-3PH-LUNINOUS',
-    rate: 0,
-    unit: 'NOS',
-    category: 'Inverters'
-  },
-  {
     id: 'inverter-10kw-3ph-2mppt-xwatt',
     name: '10KWP-GTI-3PH-2MPPT-XWATT',
     rate: 42930.00,
@@ -219,13 +212,6 @@ export const items: Item[] = [
     id: 'dc-cable-1cx4-50mm-polycab',
     name: 'DC CABLE 1CX4 SQMM 50MM POLYCAB',
     rate: 39.98,
-    unit: 'MTR',
-    category: 'Cables - DC'
-  },
-  {
-    id: 'dc-cable-1cx4-black-50mm-polycab',
-    name: 'DC CABLE 1CX4 SQ. MM BLACK 50MM POLYCAB',
-    rate: 0,
     unit: 'MTR',
     category: 'Cables - DC'
   },
@@ -391,13 +377,6 @@ export const items: Item[] = [
     unit: 'NOS',
     category: 'Electrical Components'
   },
-  {
-    id: 'dcdb-2in-2out-1000v',
-    name: 'DCDB 2IN 2 OUT 1000V DC SPD & 25AMP FUSE ELMAK',
-    rate: 0,
-    unit: 'NOS',
-    category: 'Electrical Components'
-  },
 
   // Structural Components
   {
@@ -431,22 +410,22 @@ export const items: Item[] = [
   {
     id: 'hr-plate-base-plate',
     name: 'H R PLATE / BASE PLATE',
-    rate: 60.00,
-    unit: 'KG',
+    rate: 114.00,
+    unit: 'PCS',
     category: 'Structural Components'
   },
   {
     id: 'gi-bnw-1-2x6',
     name: 'GI BNW 1/2*6',
-    rate: 114.71,
-    unit: 'KG',
+    rate: 22.00,
+    unit: 'PCS',
     category: 'Structural Components'
   },
   {
     id: 'gi-l-bolt',
     name: 'GI L BOLT 5/16*1 1/2*2 1/4',
-    rate: 115.00,
-    unit: 'KG',
+    rate: 5.00,
+    unit: 'PCS',
     category: 'Structural Components'
   },
   {
