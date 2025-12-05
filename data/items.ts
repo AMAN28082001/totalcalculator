@@ -470,13 +470,6 @@ export const items: Item[] = [
     unit: 'PCS',
     category: 'Structural Components'
   },
-  {
-    id: 'inline-pipe-16mm',
-    name: 'INLINE PIPE 16MM',
-    rate: 0,
-    unit: 'PCS',
-    category: 'Structural Components'
-  },
 
   // Accessories
   {

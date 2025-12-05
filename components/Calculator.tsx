@@ -23,20 +23,28 @@ export default function Calculator() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check role on mount and after a short delay to catch localStorage updates
+    // Check role on mount and after delays to catch localStorage updates
     const checkRole = () => {
       const role = getUserRole();
-      setUserRole(role);
+      if (role !== userRole) {
+        setUserRole(role);
+      }
     };
     
     // Check immediately
     checkRole();
     
-    // Check again after a short delay (in case role was just set)
-    const timeout = setTimeout(checkRole, 100);
+    // Check again after delays (in case role was just set by RoleSelector)
+    const timeout1 = setTimeout(checkRole, 100);
+    const timeout2 = setTimeout(checkRole, 300);
+    const timeout3 = setTimeout(checkRole, 500);
     
-    return () => clearTimeout(timeout);
-  }, []);
+    return () => {
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
+    };
+  }, [userRole]);
 
 
   // Cart will only open when user clicks the cart button, not automatically
@@ -494,12 +502,11 @@ export default function Calculator() {
                       <h3 className="item-name">{item.name}</h3>
                       <div className="item-details">
                         {/* Show price for admin, customer, or when role is not set */}
-                        {userRole !== 'sales' && (
-                          <span className="item-rate">Rate: {formatCurrency(getItemPrice(item))}</span>
-                        )}
-                        {/* Hide price only for sales role */}
-                        {userRole === 'sales' && (
+                        {/* Only hide price for sales role */}
+                        {userRole === 'sales' ? (
                           <span className="item-rate" style={{ color: '#9ca3af' }}>Price hidden</span>
+                        ) : (
+                          <span className="item-rate">Rate: {formatCurrency(getItemPrice(item))}</span>
                         )}
                         <span className="item-unit">Unit: {item.unit}</span>
                       </div>
