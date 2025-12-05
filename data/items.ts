@@ -317,13 +317,6 @@ export const items: Item[] = [
     unit: 'NOS',
     category: 'Meters'
   },
-  {
-    id: 'meter-secure-3ph-solar-net',
-    name: 'SECURE 3 PHASE SOLAR + NET',
-    rate: 0,
-    unit: 'NOS',
-    category: 'Meters'
-  },
 
   // Electrical Components - ACDB
   {
@@ -344,13 +337,6 @@ export const items: Item[] = [
     id: 'acdb-3p-5-10kw-havells',
     name: 'ACDB 3P (5-10 KW, HAVEELLS & BLITZ)',
     rate: 1850.00,
-    unit: 'NOS',
-    category: 'Electrical Components'
-  },
-  {
-    id: 'acdb-63amp-4pole-havells',
-    name: 'ACDB 63amp 4pole Havells MCB & Thelex SPD',
-    rate: 0,
     unit: 'NOS',
     category: 'Electrical Components'
   },
