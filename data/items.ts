@@ -398,14 +398,14 @@ export const items: Item[] = [
   {
     id: 'gp-tube-40x40x2',
     name: 'G.P. TUBES 40*40*2.0MM(14)',
-    rate: 968.16,
+    rate: 1204.00,
     unit: 'PCS',
     category: 'Structural Components'
   },
   {
     id: 'gp-tube-60x40x2',
     name: 'G.P. TUBES 60*40*2.0MM(18)',
-    rate: 1250.87,
+    rate: 1548.00,
     unit: 'PCS',
     category: 'Structural Components'
   },
@@ -419,7 +419,7 @@ export const items: Item[] = [
   {
     id: 'gp-tube-72x72x2',
     name: 'G.P. TUBES 72*72*2.0 MM(28)',
-    rate: 1860.49,
+    rate: 2408.00,
     unit: 'PCS',
     category: 'Structural Components'
   },
