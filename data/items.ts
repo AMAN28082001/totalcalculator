@@ -2,6 +2,8 @@ export interface Item {
   id: string;
   name: string;
   rate: number;
+  watts?: number;
+  perWattPrice?: number;
   unit: string;
   category: string;
 }
