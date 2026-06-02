@@ -11,99 +11,127 @@ export const items: Item[] = [
   {
     id: 'adani-545-dcr',
     name: 'ADANI SOLAR PANEL 545 WATT(DCR)',
-    rate: 13706.75,
+    watts: 545,
+    rate: 13625.00,
+    perWattPrice: 25,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'adani-550-dcr',
     name: 'ADANI SOLAR PANEL 550 WATT(DCR)',
-    rate: 13746.98,
+    watts: 550,
+    rate: 14850.00,
+    perWattPrice: 27,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'adani-550-ndcr',
     name: 'ADANI SOLAR PANEL 550 WATT(NDCR)',
-    rate: 13819.50,
+    watts: 550,
+    rate: 8250.00,
+    perWattPrice: 15,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'adani-555-dcr',
     name: 'ADANI SOLAR PANEL 555 WATT(DCR)',
-    rate: 13819.50,
+    watts: 555,
+    rate: 14985.00,
+    perWattPrice: 27,
     unit: 'PCS',
     category: 'Solar Panels'
   },
   {
     id: 'adani-555-ndcr',
     name: 'ADANI SOLAR PANEL 555 WATT(NDCR)',
-    rate: 7853.25,
-    unit: 'NOS',
-    category: 'Solar Panels'
-  },
-  {
-    id: 'adani-570-dcr',
-    name: 'ADANI SOLAR PANEL 570 WATT(DCR)',
-    rate: 15105.00,
+    watts: 555,
+    rate: 8325.00,
+    perWattPrice: 15.00,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'adani-610-dcr',
     name: 'ADANI SOLAR PANEL 610 WATT(DCR)',
-    rate: 16600.00,
+    watts: 610,
+    rate: 17690.00,
+    perWattPrice: 29,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'adani-620-dcr',
     name: 'ADANI SOLAR PANEL 620 WATT(DCR)',
-    rate: 16616.00,
+    watts: 620,
+    rate: 17980.00,
+    perWattPrice: 27,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'adani-620-ndcr',
     name: 'ADANI SOLAR PANEL 620 WATT(NDCR)',
-    rate: 9548.00,
+    watts: 620,
+    rate: 11160.00,
+    perWattPrice: 18.00,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'waaree-540-dcr',
     name: 'WAAREE SOLAR PANEL BI-55-540(DCR)',
-    rate: 13095.00,
+    watts: 540,
+    rate: 14580.00,
+    perWattPrice: 27.00,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'waaree-575-dcr',
     name: 'WAAREE SOLAR PANEL BI-575(DCR)',
-    rate: 13800.00,
+    watts: 575,
+    rate: 13943.75,
+    perWattPrice: 24.25,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
-    id: 'waaree-590-ndcr',
-    name: 'WAAREE SOLAR PANEL BI-590(NDCR)',
-    rate: 8850.00,
+    id: 'waaree-595-ndcr',
+    name: 'WAAREE SOLAR PANEL BI-595(NDCR)',
+    watts: 595,
+    rate: 9371.25,
+    perWattPrice: 15.75,
     unit: 'NOS',
     category: 'Solar Panels'
   },
   {
     id: 'waaree-690-ndcr',
     name: 'WAAREE SOLAR PANEL BI-690(NDCR)',
-    rate: 11178.00,
+    watts: 690,
+    rate: 12075.00,
+    perWattPrice: 17.50,
     unit: 'PCS',
     category: 'Solar Panels'
   },
   {
-    id: 'solar-panels-generic',
-    name: 'SOLAR PANELS',
-    rate: 13248.18,
-    unit: 'NOS',
+    id: 'waaree-695-ndcr',
+    name: 'WAAREE SOLAR PANEL BI-695(NDCR)',
+    watts: 695,
+    rate: 12162.50,
+    perWattPrice: 17.50,
+    unit: 'PCS',
+    category: 'Solar Panels'
+  },
+  {
+    id: 'waaree-700-ndcr',
+    name: 'WAAREE SOLAR PANEL BI-700(NDCR)',
+    watts: 700,
+    rate: 12250.00,
+    perWattPrice: 17.50,
+    unit: 'PCS',
     category: 'Solar Panels'
   },
 
